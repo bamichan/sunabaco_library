@@ -1,30 +1,41 @@
+/*** 全体 ***/
 
 /*** スタートページ ***/
-#btn_start{
-  background-color: #FCBF4C;
-  color: #FFFAFA;
-  margin-top: 40px;
-}
 .description{
   height: 400px;
 }
 .description h1{
+  font-family: 'Hiragino Kaku Gothic ProN';
+  font-weight: 600;
+  font-size: 43px;
+  line-height: 1.46;
+  letter-spacing: 0.08em;
   margin-top: 0;
-  padding-top: 50px;
+  padding-top: 147px;
   color: white;
 }
 /* 背景波線 */
-html, body, #wrap {
+html, body {
   height: 100%;
 }
 #wrap {
   position: relative;
+  height: 476px;
 }
 #svg-bg {
   position: absolute;
   width: 100%;
-  height: 100%;
+  /* height: 100%; →波線上下が足りないため削除 */
   top: 0;
   left: 0;
   z-index: -1;
+}
+#btn_start{
+  background-color: #FCBF4C;
+  color: #FFFAFA;
+  font-size: 20px;
+  margin-top: 128px;
+  width: 180px;
+  height: 36px;
+  border-radius: 18px;
 }

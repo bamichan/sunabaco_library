@@ -1,4 +1,36 @@
 /**** 全体 ****/
+/* Google Material iconsを利用する */
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* 推奨サイズ */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  /* WebKitブラウザサポート */
+  -webkit-font-smoothing: antialiased;
+  /* Chrome、Safariサポート */
+  text-rendering: optimizeLegibility;
+  /* Firefoxサポート */
+  -moz-osx-font-smoothing: grayscale;
+  /* IEサポート */
+  font-feature-settings: 'liga';
+}
+/* アイコンサイズ */
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+/* 背景が明るいとき用のアイコン色 */
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+/* 背景が暗いとき用のアイコン色 */
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+/****/
 
 /**** スタートページ ****/
 .description{
@@ -38,15 +70,45 @@ html, body {
   height: 36px;
   border-radius: 18px;
 }
+/****/
 
 /**** 本棚 ****/
-header{
+.main_header{
   background-color: #FFBA00;
   color: #FFFAFA;
-  border-radius: 0  0 25px 25px;
-  box-shadow: 0 5 10 rgb(0, 0, 0,0.15);
+  border-radius: 0 0 25px 25px;
+  /* x方向 y方向 ぼかし 広がり 色 */
+  box-shadow: 0px 5px 10px 0px rgb(0, 0, 0,0.15);
   height: 120px;
 }
-header ul,header li{
+.main_header div{
+  /* メニューアイコン */
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  padding: 20px 20px 0 0;
+}
+.main_header ul{
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main_header li{
   float: left;
+  width: 55px;
+  height: 43px;
+  margin: 0 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: 'Hiragino Kaku Gothic ProN';
+  font-weight: 600;
+  /* 下線 */
+  border-bottom: solid 3px rgba(255, 255, 255, 1);
+}
+.main_header ul li .header_home{
+  width: 35.3px;
 }

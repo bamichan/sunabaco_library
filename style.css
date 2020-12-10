@@ -30,7 +30,10 @@
 /* 背景が暗いとき用のアイコン色 */
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
-/****/
+/*****************↑↑↑*********************/
+h1{
+  margin: 0;
+}
 
 /**** スタートページ ****/
 .description{
@@ -81,16 +84,35 @@ html, body {
   box-shadow: 0px 5px 10px 0px rgb(0, 0, 0,0.15);
   height: 120px;
 }
-.main_header div{
-  /* メニューアイコン */
+/* メニュー上側 */
+.main_header .header_upper{
   display: flex;
   width: 100%;
-  justify-content: flex-end;
-  padding: 20px 20px 0 0;
+  height: 61px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 20px 0 20px;
 }
+.main_header h1{
+  font-size: 14px;
+}
+.main_header .header_upper .navi{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.main_header .notion{
+  margin-right: 10px;
+}
+.main_header .notion img{
+  height: 26px;
+  width: auto;
+}
+/* メニュー下側 */
 .main_header ul{
   width: 100%;
   height: auto;
+  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -106,9 +128,11 @@ html, body {
   text-align: center;
   font-family: 'Hiragino Kaku Gothic ProN';
   font-weight: 600;
-  /* 下線 */
-  border-bottom: solid 3px rgba(255, 255, 255, 1);
 }
 .main_header ul li .header_home{
   width: 35.3px;
+}
+/* 下線を引く目印クラス */
+.main_header ul li .tb_now{
+  border-bottom: solid 3px rgba(255, 255, 255, 1);
 }

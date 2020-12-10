@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres123
+      - POSTGRES_DB=postgres
+      - POSTGRES_PORT= 5432
+    volumes:
+      - ./docker/pg:/var/lib/postgresql
+    ports:
+      - "5432:5432"
+    networks:
+      - nginx_network
+
+  web:
+    build: .
+    image: docker_sunabaco_web:latest
+    volumes:
+      - .:/sunabaco_app
+      - ./nginx/gunicorn:/var/run/gunicorn
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:3000"
+    depends_on:
+      - db
+    networks:
+      - nginx_network
+
+  app:
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    image: docker_sunabaco_app:latest
+    volumes:
+      - .:/sunabaco_app
+      - ./nginx:/etc/nginx
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/gunicorn:/var/run/gunicorn
+    ports:
+      - "5000:80"
+    depends_on:
+      - web
+    restart: always
+    networks:
+      - nginx_network
+
+networks:
+  nginx_network:
+    driver: bridge
+

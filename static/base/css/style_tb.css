@@ -1,0 +1,11 @@
+/* タブレット以上のレスポンシブ */
+@media screen  and (min-width: 570px){
+  .description{
+    height: 80%;
+  }
+  /* 背景をSVGにしたので幅が変わるとデザイン変わってしまう */
+  #btn_start{
+    background-color: #FFFAFA;
+    color: #FCBF4C;
+  }
+}

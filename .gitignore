@@ -1,0 +1,9 @@
+__pycache__/
+local.py
+test.py
+upload_to_portfolio/
+docker
+node_modules
+media
+upload_to_profile
+upload_to_portfolio

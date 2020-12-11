@@ -6,6 +6,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.decorators import login_required
 from sunabaco_book.forms import LoginForm
+from sunabaco_book.models import Bookimage 
 
 from django.template.context_processors import media
 from django.http import Http404
@@ -17,13 +18,6 @@ from django.conf import settings
 from django.db.models.signals import post_save
 # ------------------------------------------------------------------
 
-class UserLoginView(LoginView):
-    form_class = LoginForm
-
-login = UserLoginView.as_view()
-
-logout = LogoutView.as_view()
-
 
 
 # Create your views here.
@@ -34,3 +28,25 @@ def index(request):
 def borrow(request):
 
     return render(request,'sunabaco_book/borrow.html')
+
+
+class BookimageListView(generic.ListView):
+    model = Bookimage
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profile'] = profile.objects.all()
+        return context
+
+    def get_queryset(self):
+        return Bookimage.objects.all()
+
+bookimage_list = BookimageListView.as_view()
+
+# ------------------------------------------------------------------
+class BookimageDetailView(generic.DetailView):
+    model = Bookimage
+
+bookimage_detail = BookimageDetailView.as_view()
+
+

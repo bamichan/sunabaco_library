@@ -12,10 +12,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     # webapp
     'sunabaco_book.apps.SunabacoBookConfig',
     #Library
+    'social_django',
 ]
 
 TAILWIND_APP_NAME = 'theme'
@@ -32,6 +32,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -48,6 +49,8 @@ TEMPLATES = [
                 'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
             'builtins':[
                 'bootstrap4.templatetags.bootstrap4',
@@ -79,6 +82,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+SOCIAL_AUTH_URL_NAMESPACE = "social"
+SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 LANGUAGE_CODE = 'ja'

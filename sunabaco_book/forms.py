@@ -1,4 +1,5 @@
 from django import forms
+from sunabaco_book.models import Bookimage 
 from django.contrib.auth import forms as auth_forms
 
 class LoginForm(auth_forms.AuthenticationForm):

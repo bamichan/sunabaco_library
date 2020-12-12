@@ -3,9 +3,7 @@ from django.views import generic
 from django.urls import reverse_lazy
 from django.core.exceptions import MultipleObjectsReturned
 from django.utils.decorators import method_decorator
-from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.decorators import login_required
-from sunabaco_book.forms import LoginForm
 from sunabaco_book.models import Bookimage 
 
 from django.template.context_processors import media

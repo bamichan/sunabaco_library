@@ -14,8 +14,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # webapp
     'sunabaco_book.apps.SunabacoBookConfig',
+    'register.apps.RegisterConfig',
     #Library
+    'theme.apps.ThemeConfig',
+    "crispy_forms",
+    "crispy_tailwind",
     'social_django',
+    'bootstrap4',
 ]
 
 TAILWIND_APP_NAME = 'theme'
@@ -93,7 +98,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 SOCIAL_AUTH_URL_NAMESPACE = "social"
-SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 LANGUAGE_CODE = 'ja'
@@ -105,7 +109,8 @@ USE_TZ = True
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'assets')
 ]
+AUTH_USER_MODEL = 'register.User'
 
-LOGIN_URL = 'sunabaco_book:login'
-LOGIN_REDIRECT_URL = 'sunabaco_book:borrow'
-LOGOUT_REDIRECT_URL = 'sunabaco_book:login'
+LOGIN_URL = 'register:login'
+LOGIN_REDIRECT_URL = 'register:top'
+LOGOUT_REDIRECT_URL = 'register:login'

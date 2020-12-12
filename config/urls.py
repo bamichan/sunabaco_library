@@ -24,6 +24,7 @@ admin.site.index_title = 'メニュー'
 
 urlpatterns = [
     path('', include('sunabaco_book.urls')),
+    path('register/', include('register.urls')),
     path('admin/', admin.site.urls),
     path('oauth/', include('social_django.urls', namespace='social')),
     

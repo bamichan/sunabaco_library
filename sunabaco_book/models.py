@@ -3,6 +3,8 @@ from io import BytesIO
 from django.core.files import File
 from django.db import models
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.core.validators import MaxValueValidator, MinValueValidator 
 import os
 import uuid
@@ -64,27 +66,8 @@ class Bookimage(models.Model):
         return new_image
 
 # ---------------------------profile------------------------------------
-# class profile(models.Model):
-#     name = models.CharField('名前', max_length=64, null=False)
-#     body = models.TextField('自己紹介', max_length=512, null=False)
-#     image = models.ImageField('画像', upload_to='upload_to_profile', null=False)
 
-#     def save(self, new_image=False, *args, **kwargs):
-#         # インスタンスメソッドの上書き
-#         # 画像があれば圧縮して新しい画像オブジェクトを作成する
-#         if new_image:
-#             new_image = profile.compress(self.image)
-#             self.image = new_image
-#         super().save(*args, **kwargs)
-
-#     @classmethod
-#     def compress(cls, image):
-#         # RGBA 対応していない処理
-#         im = Image.open(image)
-#         im_io = BytesIO()
-#         im.save(im_io, 'JPEG', quality=70)
-#         new_image = File(im_io, name=image.name)
-#         return new_image
+   
 
 # # ---------------------------comment------------------------------------
 # JOB_CHOICES = [

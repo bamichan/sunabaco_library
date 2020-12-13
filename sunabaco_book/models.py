@@ -2,6 +2,7 @@ from PIL import Image
 from io import BytesIO
 from django.core.files import File
 from django.db import models
+from django.conf import settings
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -9,7 +10,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 import os
 import uuid
 
-def upload_to_portfolio(self, filename):
+def upload_to_book(self, filename):
     ext = filename.split('.')[-1]  #filename->sample.png->splitすると['sample', 'png']
     name = '{}.{}'.format(uuid.uuid4(), ext)
     return os.path.join('sunabaco_book', name)
@@ -31,6 +32,7 @@ class Bookimage(models.Model):
     body = models.TextField('本の説明', max_length=512, null=False)
     image = models.ImageField('本のイメージ', upload_to='upload_to_book', null=False)
     lending = models.PositiveSmallIntegerField('レンタルモード', default=0, validators=[MinValueValidator(0), MaxValueValidator(3)], null=False)
+    book_status = models.PositiveSmallIntegerField('本の貸し出し状態', default=0, validators=[MinValueValidator(0), MaxValueValidator(2)], null=False)
     created_at = models.DateTimeField(default=timezone.now)
 
     def save(self, new_image=False, *args, **kwargs):
@@ -65,10 +67,13 @@ class Bookimage(models.Model):
         new_image = File(im_io, name=image.name)
         return new_image
 
-# ---------------------------profile------------------------------------
-
-   
-
+# ---------------------------------------------------------------
+class Reservation(models.Model):
+    """予約管理"""
+    user_id = models.PositiveIntegerField(editable=False)
+    return_date = models.DateField(verbose_name='サンプル項目1 日付', blank=True, null=True,)
+    isbn = models.CharField('ISBN', max_length=13)
+    
 # # ---------------------------comment------------------------------------
 # JOB_CHOICES = [
 #     ('デザイン', 'デザイン'),

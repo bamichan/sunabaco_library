@@ -1,7 +1,8 @@
 {% extends "register/base.html" %}
+
 {% block content %}
 <div class="row">
-    <!-- 左側、ログインエリア -->
+    <!-- ログイン -->
     <div class="card col-md-6">
         <div class="card-body">
             <form action="{% url 'register:login' %}" method="POST">
@@ -16,14 +17,21 @@
                 {% csrf_token %}
             </form>
         </div>
-    </div><!-- 左側、ログインエリアおわり -->
+    </div>
 
-    <!-- 右側、会員登録エリア -->
+    <ul>
+        <li><a href="{% url 'social:begin' 'facebook' %}">Facebookでログイン</a></li>
+    </ul>
+    <ul>
+        <li><a href="{% url 'register:logout' %}">ログアウト</a></li>
+    </ul>
+
+    <!-- 会員登録 -->
     <div class="card col-md-6">
         <div class="card-body">
             <a href="{% url 'register:user_create' %}" class="btn btn-success btn-lg btn-block" >会員登録</a><hr>
             <a href="{% url 'register:password_reset' %}" class="btn btn-success btn-lg btn-block" >パスワードを忘れた方</a>
         </div>
-    </div><!-- 右側、会員登録エリアおわり -->
+    </div>
 </div>
 {% endblock %}

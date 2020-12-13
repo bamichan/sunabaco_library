@@ -1,0 +1,15 @@
+{% extends 'sunabaco_book/base.html' %}
+{% block head_title %}SUNABACO図書館{% endblock%}
+{% block content %}
+
+<div>
+    <img class="block w-full object-cover" src="{{ bookimage.image.url }}" alt="作品">
+    <p>{{ bookimage.title }}</p>
+</div>
+
+
+    <div>
+        <a href="{% url 'sunabaco_book:create'%}">レンタルする</a>
+    </div>
+
+{% endblock content %}

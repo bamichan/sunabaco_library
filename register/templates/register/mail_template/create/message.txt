@@ -2,8 +2,7 @@
 
 下記URLよりサイトにアクセスの上、引き続き会員登録をお願いいたします。
 まだ会員登録手続きは完了しておりませんので、ご注意ください。
-
+（sunabaco図書館）
 本登録用URL
 {{ protocol}}://{{ domain }}{% url 'register:user_create_complete' token %}
 
-ほにゃらら

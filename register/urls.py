@@ -1,17 +1,14 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
-from django.conf import settings
-from django.conf.urls.static import static
-
 
 app_name = 'register'
 
 urlpatterns = [
-    path('top/', views.Top.as_view(), name='top'),
+    path('', views.Top.as_view(), name='top'),
     path('login/', views.Login.as_view(), name='login'),
     path('logout/', views.Logout.as_view(), name='logout'),
-    path('accounts/profile/', views.Top.as_view(), name='index'),
     path('user_create/', views.UserCreate.as_view(), name='user_create'),
+    path('oauth/', include('social_django.urls', namespace='social')),
     path('user_create/done/', views.UserCreateDone.as_view(), name='user_create_done'),
     path('user_create/complete/<token>/', views.UserCreateComplete.as_view(), name='user_create_complete'),
     path('user_detail/<int:pk>/', views.UserDetail.as_view(), name='user_detail'),
@@ -26,5 +23,3 @@ urlpatterns = [
     path('email/change/done/', views.EmailChangeDone.as_view(), name='email_change_done'),
     path('email/change/complete/<str:token>/', views.EmailChangeComplete.as_view(), name='email_change_complete'),
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

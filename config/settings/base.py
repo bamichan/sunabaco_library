@@ -21,11 +21,14 @@ INSTALLED_APPS = [
     "crispy_tailwind",
     'social_django',
     'bootstrap4',
+    'bootstrap_datepicker_plus',
 ]
+
+
 
 TAILWIND_APP_NAME = 'theme'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
-CRISPY_TEMPLATE_PACK = "tailwind"
+CRISPY_TEMPLATE_PACK = "uni_form"
 
 NPM_LIB_PATH = "/usr/lib/node_modules/npm"
 
@@ -67,6 +70,10 @@ TEMPLATES = [
     },
 ]
 
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
+
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # Password validation
@@ -98,6 +105,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 SOCIAL_AUTH_URL_NAMESPACE = "social"
+NAMESPACE = "book"
 
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 LANGUAGE_CODE = 'ja'
@@ -110,7 +118,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'assets')
 ]
 AUTH_USER_MODEL = 'register.User'
+DATE_INPUT_FORMATS = ['%d-%m-%Y']
 
 LOGIN_URL = 'register:login'
-LOGIN_REDIRECT_URL = 'register:top'
+LOGIN_REDIRECT_URL = 'sunabaco_book:list'
 LOGOUT_REDIRECT_URL = 'register:login'

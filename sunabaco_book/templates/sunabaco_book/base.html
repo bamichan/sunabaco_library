@@ -1,14 +1,15 @@
 {% load static %}
 
+{% load bootstrap4 %}
 {% bootstrap_css %}
 {% bootstrap_javascript jquery='full' %}
+{{ form.media }}
 
 <!DOCTYPE html>
 <html lang="ja">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     <!--Import Google Icon Font-->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}?20200925">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

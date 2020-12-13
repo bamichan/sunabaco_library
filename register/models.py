@@ -4,6 +4,10 @@ from django.contrib.auth.models import PermissionsMixin, UserManager
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from django.conf import settings
+
 
 
 class CustomUserManager(UserManager):
@@ -11,8 +15,7 @@ class CustomUserManager(UserManager):
     use_in_migrations = True
 
     def _create_user(self, email, password, **extra_fields):
-        if not email:
-            raise ValueError('The given email must be set')
+        
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)

@@ -6,4 +6,8 @@ docker
 node_modules
 media
 upload_to_profile
+<<<<<<< HEAD
+upload_to_book
+=======
 upload_to_portfolio
+>>>>>>> origin/master

@@ -3,6 +3,18 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+<<<<<<< HEAD
+
+app_name = 'sunabaco_book'
+
+
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('books/reservation/', views.reservation_book, name='reservation_book'),
+    path('books_list/', views.book_list, name='list'),
+    path('books_detail/<pk>/', views.book_detail, name='detail'),
+    path('borrow/', views.borrow, name='borrow'),
+=======
 app_name = 'sunabaco_book'
 
 urlpatterns = [
@@ -10,6 +22,7 @@ urlpatterns = [
     path('borrow/', views.borrow, name='borrow'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
+>>>>>>> origin/master
 
 ]
 if settings.DEBUG:

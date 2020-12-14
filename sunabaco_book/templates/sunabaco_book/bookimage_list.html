@@ -1,0 +1,19 @@
+{% extends 'sunabaco_book/base.html' %}
+
+{% block head_title %}図書館{% endblock %}
+
+{% block content %}
+<div class="container w-11/12 max-w-screen-md p-2"> 
+    <div class="flex flex-row flex-wrap">
+        {% for book in bookimage_list %}
+
+            <div class="w-full md:w-1/2 h-64 md:h-auto mb-4 px-2">
+                <a class="block w-full h-full" href="{% url 'book:detail' book.id %}" title="Link">
+                    <img class="block w-full object-cover" src="{{ book.image.url }}" alt="作品">
+                    <p>{{ book.title }}</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

@@ -16,6 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import include, url
+<<<<<<< HEAD
+from django.conf import settings
+
+
+admin.site.site_header = 'SUNABACO図書館♥管理者フォーム'
+admin.site.index_title = 'メニュー'
+
+urlpatterns = [
+    path('', include('sunabaco_book.urls', namespace='book')),
+    path('register/', include('register.urls')),
+    path('admin/', admin.site.urls),
+    path('oauth/', include('social_django.urls', namespace='social')),
+    
+=======
 
 admin.site.site_header = 'WEB管理者'
 admin.site.index_title = 'メニュー'
@@ -23,4 +37,5 @@ admin.site.index_title = 'メニュー'
 urlpatterns = [
     path('', include('sunabaco_book.urls')),
     path('admin/', admin.site.urls),
+>>>>>>> origin/master
 ]

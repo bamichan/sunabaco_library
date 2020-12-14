@@ -12,6 +12,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     # webapp
     'sunabaco_book.apps.SunabacoBookConfig',
     'register.apps.RegisterConfig',
@@ -29,6 +30,17 @@ INSTALLED_APPS = [
 TAILWIND_APP_NAME = 'theme'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "uni_form"
+=======
+
+    # webapp
+    'sunabaco_book.apps.SunabacoBookConfig',
+    #Library
+]
+
+TAILWIND_APP_NAME = 'theme'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+CRISPY_TEMPLATE_PACK = "tailwind"
+>>>>>>> origin/master
 
 NPM_LIB_PATH = "/usr/lib/node_modules/npm"
 
@@ -40,7 +52,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+<<<<<<< HEAD
     'social_django.middleware.SocialAuthExceptionMiddleware',
+=======
+>>>>>>> origin/master
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -57,8 +72,11 @@ TEMPLATES = [
                 'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+<<<<<<< HEAD
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+=======
+>>>>>>> origin/master
             ],
             'builtins':[
                 'bootstrap4.templatetags.bootstrap4',
@@ -70,10 +88,13 @@ TEMPLATES = [
     },
 ]
 
+<<<<<<< HEAD
 BOOTSTRAP4 = {
     'include_jquery': True,
 }
 
+=======
+>>>>>>> origin/master
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # Password validation
@@ -94,6 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+<<<<<<< HEAD
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.open_id.OpenIdAuth',
     'social_core.backends.google.GoogleOpenId',
@@ -106,6 +128,8 @@ AUTHENTICATION_BACKENDS = (
 )
 SOCIAL_AUTH_URL_NAMESPACE = "social"
 NAMESPACE = "book"
+=======
+>>>>>>> origin/master
 
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 LANGUAGE_CODE = 'ja'
@@ -117,8 +141,15 @@ USE_TZ = True
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'assets')
 ]
+<<<<<<< HEAD
 AUTH_USER_MODEL = 'register.User'
 
 LOGIN_URL = 'register:login'
 LOGIN_REDIRECT_URL = 'sunabaco_book:reservation_book'
 LOGOUT_REDIRECT_URL = 'register:login'
+=======
+
+LOGIN_URL = 'sunabaco_book:login'
+LOGIN_REDIRECT_URL = 'sunabaco_book:borrow'
+LOGOUT_REDIRECT_URL = 'sunabaco_book:login'
+>>>>>>> origin/master

@@ -118,8 +118,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'assets')
 ]
 AUTH_USER_MODEL = 'register.User'
-DATE_INPUT_FORMATS = ['%d-%m-%Y']
 
 LOGIN_URL = 'register:login'
-LOGIN_REDIRECT_URL = 'sunabaco_book:list'
+LOGIN_REDIRECT_URL = 'sunabaco_book:reservation_book'
 LOGOUT_REDIRECT_URL = 'register:login'

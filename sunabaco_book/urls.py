@@ -9,7 +9,7 @@ app_name = 'sunabaco_book'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('books/create/', views.book_create, name='create'),
+    path('books/reservation/', views.reservation_book, name='reservation_book'),
     path('books_list/', views.book_list, name='list'),
     path('books_detail/<pk>/', views.book_detail, name='detail'),
     path('borrow/', views.borrow, name='borrow'),

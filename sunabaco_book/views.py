@@ -52,17 +52,25 @@ book_detail = BookimageDetailView.as_view()
 # ------------------------予約view--------------------------------------
 @method_decorator(login_required, name='dispatch')
 class ReservationCreate(generic.CreateView):
+    template_name = 'sunabaco_book/reservation_form.html'
     model = Reservation
     form_class = ReservationCreateForm
-    success_url = reverse_lazy('sunabaco_book:crate')
+    success_url = reverse_lazy('sunabaco_book:reservation_book')
 
-    def form_valid(self, form, request, *args, **kwargs):
+    def form_valid(self, form, *args, **kwargs):
         reservation = form.save(commit=False)
         reservation.user_id = self.request.user.id
         reservation.save()
-        messages.info(self.request, 'レンタルのご予約は正常に送信されました。')
+        messages.success(self.request, 'レンタルのご予約は正常に送信されました。')
         return super().form_valid(form)
 
-book_create = ReservationCreate.as_view()
+    def form_invalid(self, form):
+        messages.warning(self.request, '送信できませんでした。')
+        return super().form_invalid(form)
 
+reservation_book = ReservationCreate.as_view()
+
+
+def get_queryset(self, request, queryset):
+        self.request.Bookimage.objects.filter(isbn=self).update(book_status=1)
 

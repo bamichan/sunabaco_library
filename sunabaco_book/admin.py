@@ -1,5 +1,4 @@
 from django.contrib import admin
-<<<<<<< HEAD
 from sunabaco_book.models import Bookimage, Reservation
 from django.contrib import messages
 
@@ -33,8 +32,3 @@ class BookimageAdmin(admin.ModelAdmin):
 #     list_display = ('id', 'user', 'start', 'end', 'book',)
 #     list_display_link = ('id', 'user', 'start', 'end', 'book')
 #     search_fields = ('id', 'user', 'start', 'end', 'book')
-    
-=======
-
-
->>>>>>> origin/master

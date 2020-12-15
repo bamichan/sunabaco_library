@@ -97,4 +97,3 @@ class ReturnCreate(generic.CreateView):
         return super().form_invalid(form)
 
 return_book = ReturnCreate.as_view()
-

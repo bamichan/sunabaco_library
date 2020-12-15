@@ -71,10 +71,13 @@ class Bookimage(models.Model):
 class Reservation(models.Model):
     """予約管理"""
     book_image = models.ForeignKey(Bookimage, on_delete=models.CASCADE)
-    user_id = models.PositiveIntegerField(editable=False)
-    return_date = models.DateField(verbose_name='返却日 日付', blank=True, null=True,)
+    lending_user_id = models.UUIDField(editable=False)
+    return_date = models.DateField(verbose_name='返却日 日付', blank=True, null=False,)
     isbn = models.CharField('ISBN', max_length=13)
     created_at = models.DateTimeField(default=timezone.now)
+
+    def __int__(self):
+         return self.return_date
 
 # # ---------------------------comment------------------------------------
 # JOB_CHOICES = [

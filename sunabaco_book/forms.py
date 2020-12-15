@@ -18,3 +18,12 @@ class ReservationCreateForm(forms.ModelForm):
                     }
             )
         }
+
+class Return_bookForm(forms.ModelForm):
+
+    class Meta:
+        model = Bookimage
+        fields = ['book_status']
+        widgets = {
+            'book_status': forms.HiddenInput,
+        }

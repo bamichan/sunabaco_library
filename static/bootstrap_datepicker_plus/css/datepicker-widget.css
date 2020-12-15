@@ -7,14 +7,7 @@
      url('//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/fonts/glyphicons-halflings-regular.ttf') format('truetype'),
      url('//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
-.datepicker-days th.dow:first-child,
-.datepicker-days td:first-child {
-    color: #f00;
-}
-.datepicker-days th.dow:last-child,
-.datepicker-days td:last-child {
-    color: #00f;
-}
+
 .glyphicon {
     position: relative;
     top: 1px;

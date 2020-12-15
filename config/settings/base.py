@@ -121,5 +121,5 @@ STATICFILES_DIRS = [
 AUTH_USER_MODEL = 'register.User'
 
 LOGIN_URL = 'register:login'
-LOGIN_REDIRECT_URL = 'sunabaco_book:reservation_book'
+LOGIN_REDIRECT_URL = 'sunabaco_book:list'
 LOGOUT_REDIRECT_URL = 'register:login'

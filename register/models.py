@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.core.mail import send_mail
 from django.contrib.auth.models import PermissionsMixin, UserManager
@@ -15,7 +16,6 @@ class CustomUserManager(UserManager):
     use_in_migrations = True
 
     def _create_user(self, email, password, **extra_fields):
-        
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
@@ -43,6 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     usernameを使わず、emailアドレスをユーザー名として使うようにしています。
 
     """
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=150, blank=True)

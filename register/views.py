@@ -57,7 +57,7 @@ class UserCreate(generic.CreateView):
         context = {
             'protocol': 'https' if self.request.is_secure() else 'http',
             'domain': domain,
-            'token': dumps(user.pk),
+            'token': dumps(str(user.id)),
             'user': user,
         }
 
@@ -69,7 +69,7 @@ class UserCreate(generic.CreateView):
 
 
 class UserCreateDone(generic.TemplateView):
-    """ユーザー仮登録したよ"""
+    """ユーザー仮登録"""
     template_name = 'register/user_create_done.html'
 
 

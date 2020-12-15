@@ -7,11 +7,11 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from register.models import User 
 from sunabaco_book.models import Bookimage, Reservation 
-from sunabaco_book.forms import ReservationCreateForm
+from sunabaco_book.forms import ReservationCreateForm, Return_bookForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.template.context_processors import media
 from django.http import Http404
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.contrib import messages
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -31,18 +31,12 @@ def borrow(request):
 
 class BookimageListView(generic.ListView):
     model = Bookimage
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['sunabaco_list'] = Bookimage.objects.all()
-    #     return context
-
-    # def get_queryset(self):
-    #     return Bookimage.objects.all()
+    
 
 book_list = BookimageListView.as_view()
 
 # ------------------------------------------------------------------
-@method_decorator(login_required, name='dispatch')
+# @method_decorator(login_required, name='dispatch')
 class BookimageDetailView(generic.DetailView):
     model = Bookimage
 
@@ -57,11 +51,20 @@ class ReservationCreate(generic.CreateView):
     success_url = reverse_lazy('sunabaco_book:reservation_book')
 
     def form_valid(self, form, *args, **kwargs):
-        reservation = form.save(commit=False)
-        reservation.user_id = self.request.user.id
-        reservation.save()
-        messages.success(self.request, 'レンタルのご予約は正常に送信されました。')
-        return super().form_valid(form)
+        post_pk = self.kwargs['pk']
+        post = get_object_or_404(Bookimage, pk=post_pk)
+        if post.book_status == 0:
+            reservation = form.save(commit=False)
+            post.book_status = 1
+            post.save()
+            reservation.book_image = post
+            reservation.lending_user_id = self.request.user.id
+            reservation.save()
+            messages.success(self.request, 'レンタルのご予約は正常に送信されました。')
+            return redirect('sunabaco_book:reservation_book', pk=post_pk)
+        else:
+            messages.warning(self.request, '現在貸し出し中です。')
+            return redirect('sunabaco_book:reservation_book', pk=post_pk)
 
     def form_invalid(self, form):
         messages.warning(self.request, '送信できませんでした。')
@@ -69,6 +72,29 @@ class ReservationCreate(generic.CreateView):
 
 reservation_book = ReservationCreate.as_view()
 
+# ------------------------------返却-----------------------------------------
+class ReturnCreate(generic.CreateView):
+    template_name = 'sunabaco_book/return_book.html'
+    model = Bookimage
+    form_class = Return_bookForm
+    success_url = reverse_lazy('sunabaco_book:return_book')
 
-def get_queryset(self, request, queryset):
-        self.request.Bookimage.objects.filter(isbn=self).update(book_status=1)
+    def form_valid(self, form, *args, **kwargs):
+        post_pk = self.kwargs['pk']
+        post = get_object_or_404(Bookimage, pk=post_pk)
+        if post.book_status == 1:
+            post = form.save(commit=False)
+            post.book_status = 0
+            post.save()
+            messages.success(self.request, 'ご返却ありがとうございます。')
+            return redirect('sunabaco_book:return_book', pk=post_pk)
+        else:
+            messages.warning(self.request, 'このアカウントではこちらの本は、借りていません。')
+            return redirect('sunabaco_book:return_book', pk=post_pk)
+
+    def form_invalid(self, form):
+        messages.warning(self.request, '送信できませんでした。')
+        return super().form_invalid(form)
+
+return_book = ReturnCreate.as_view()
+

@@ -22,13 +22,13 @@ make_pick3_up.short_description = 'その他'
 # -------------------------------------------------------------------
 @admin.register(Bookimage)
 class BookimageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'isbn', 'genre', 'Author', 'body', 'image', 'lending', 'created_at')
-    list_display_link = ('id', 'title', 'isbn', 'genre', 'Author', 'body', 'image', 'lending', 'created_at')
-    search_fields = ('id', 'title', 'isbn', 'genre', 'Author', 'body', 'image', 'lending', 'created_at')
+    list_display = ('id', 'title', 'isbn', 'genre', 'Author', 'body', 'image', 'lending', 'book_status', 'created_at')
+    list_display_link = ('id', 'title', 'isbn', 'genre', 'Author', 'body', 'image', 'lending', 'book_status', 'created_at')
+    search_fields = ('id', 'title', 'isbn', 'genre', 'Author', 'body', 'image', 'lending', 'book_status', 'created_at')
     actions = [make_pick1_up, make_pick2_up, make_pick3_up, make_pick4_up]
 
-# @admin.register(Reservation)
-# class ReservationAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'user', 'start', 'end', 'book',)
-#     list_display_link = ('id', 'user', 'start', 'end', 'book')
-#     search_fields = ('id', 'user', 'start', 'end', 'book')
+@admin.register(Reservation)
+class ReservationAdmin(admin.ModelAdmin):
+    list_display = ('id', 'book_image', 'lending_user_id', 'isbn', 'return_date', 'created_at')
+    list_display_link = ('id', 'book_image', 'lending_user_id', 'isbn', 'return_date', 'created_at')
+    search_fields = ('id', 'book_image', 'lending_user_id', 'isbn', 'return_date', 'created_at')

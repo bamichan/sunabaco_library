@@ -1,0 +1,58 @@
+{% extends 'sunabaco_book/base.html' %}
+
+{% block head_title %}図書館{% endblock %}
+
+{% block content %}
+<header class="main_header">
+    <div class="header_upper">
+        <h1>SUNABACO図書館</h1>
+        <div class="navi">
+            <a href="http://" class="notion"><img src="/static/img/icon_bell_white.png" alt="notion"></a>
+            <a href="http://" class="menu"><span class="material-icons md-36 md-light">menu</span></a>
+        </div>
+
+    </div>
+    <ul>
+        <li><img src="../../../static/img/icon_books.png" alt="HOME" class="header_home"></li>
+        <li>かえす</li>
+        <li>かす</li>
+        <li>あげる</li>
+        <li>もらう</li>
+    </ul>
+</header>
+
+<main>
+    <div class="row">
+        {% for mypage in mypage_list%}
+        {% if mypage %}
+        <div class="col s6 m4">
+            <p>{{ mypage.first_name }}</p>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <h4>履歴</h4>
+    {% for history in history_list %}
+    {% if history %}
+    <div class="col s6 m4">
+        <div class="card">
+            <div class="card-image waves-effect waves-block waves-light">
+                <p>{{ history.book_image.title }}</p>
+                {% if history.book_image.book_status == 0 %}
+                <p>貸し出しOK</p>
+                {% else %}
+                <p>貸し出し中</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</main>
+
+<footer>
+
+</footer>
+
+{% endblock content %}

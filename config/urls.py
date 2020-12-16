@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import include, url
 from django.conf import settings
+from sunabaco_book import views
 
 
 admin.site.site_header = 'SUNABACO図書館♥管理者フォーム'

@@ -8,7 +8,6 @@ urlpatterns = [
     path('login/', views.Login.as_view(), name='login'),
     path('logout/', views.Logout.as_view(), name='logout'),
     path('user_create/', views.UserCreate.as_view(), name='user_create'),
-    path('oauth/', include('social_django.urls', namespace='social')),
     path('user_create/done/', views.UserCreateDone.as_view(), name='user_create_done'),
     path('user_create/complete/<token>/', views.UserCreateComplete.as_view(), name='user_create_complete'),
     path('user_detail/<uuid>/', views.UserDetail.as_view(), name='user_detail'),

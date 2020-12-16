@@ -16,12 +16,12 @@ INSTALLED_APPS = [
     'sunabaco_book.apps.SunabacoBookConfig',
     'register.apps.RegisterConfig',
     #Library
+    'bootstrap_datepicker_plus',
     'theme.apps.ThemeConfig',
     "crispy_forms",
     "crispy_tailwind",
     'social_django',
     'bootstrap4',
-    'bootstrap_datepicker_plus',
 ]
 
 TAILWIND_APP_NAME = 'theme'

@@ -8,24 +8,7 @@ class ReservationCreateForm(forms.ModelForm):
     
     class Meta:
         model = Reservation
-        fields = ['return_date', 'isbn']
-        widgets = {
-                'return_date': DatePickerInput(
-                    format='%Y-%m-%d',
-                    options={
-                        'locale': 'ja',
-                        'dayViewHeaderFormat': 'YYYY年 MMMM',
-                    }
-            )
-        }
-
-class Return_bookForm(forms.ModelForm):
-
-class ReservationCreateForm(forms.ModelForm):
-    
-    class Meta:
-        model = Reservation
-        fields = ['return_date', 'isbn']
+        fields = ['return_date']
         widgets = {
                 'return_date': DatePickerInput(
                     format='%Y-%m-%d',

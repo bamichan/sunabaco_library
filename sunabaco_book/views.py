@@ -59,6 +59,7 @@ class ReservationCreate(generic.CreateView):
             reservation = form.save(commit=False)
             post.book_status = 1
             post.save()
+            reservation.isbn = post.isbn
             reservation.book_image = post
             reservation.lending_user_id = self.request.user.id
             reservation.save()
@@ -86,15 +87,14 @@ class ReturnCreate(generic.CreateView):
         post_pk = self.kwargs['pk']
         post = get_object_or_404(Bookimage, pk=post_pk)
         user = self.request.user.id
-        lending_user = Reservation.objects.get(pk=post_pk)
-
-        if post.book_status == 1 and user == lending_user.lending_user_id:
-            Bookimage.objects.filter(pk=post_pk).update(book_status=0)
-            messages.success(self.request, 'ご返却ありがとうございます。')
-            return redirect('sunabaco_book:return_book', pk=post_pk)
-        else:
-            messages.warning(self.request, 'このアカウントではこちらの本は、借りていません。')
-            return redirect('sunabaco_book:return_book', pk=post_pk)
+        for rental in Reservation.objects.all():
+            if post.book_status == 1 and user == rental.lending_user_id:
+                Bookimage.objects.filter(pk=post_pk).update(book_status=0)
+                messages.success(self.request, 'ご返却ありがとうございます。')
+                return redirect('sunabaco_book:return_book', pk=post_pk)
+            else:
+                messages.warning(self.request, 'こちらのアカウントではこの本は、借りていません。')
+                return redirect('sunabaco_book:return_book', pk=post_pk)
 
     def form_invalid(self, form):
         messages.warning(self.request, '送信できませんでした。')
@@ -113,5 +113,8 @@ class MypageListView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['history_list'] = Reservation.objects.filter(lending_user_id=self.request.user.id).all()
         return context
+
+    def get_queryset(self):
+        return User.objects.all()
 
 mypage_list = MypageListView.as_view()

@@ -102,6 +102,7 @@ class ReturnCreate(generic.CreateView):
 
 return_book = ReturnCreate.as_view()
 
+
 # ------------------------------マイページリスト--------------------------------------
 @method_decorator(login_required, name='dispatch')
 class MypageListView(generic.ListView):

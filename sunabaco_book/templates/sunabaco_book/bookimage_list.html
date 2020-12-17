@@ -15,8 +15,10 @@
   </div>
   <ul>
     <li><img src="../../../static/img/icon_books.png" alt="HOME" class="header_home"></li>
-    <li><p id="get_Btn">もらう</p></li>
-    <li><p id="rental_Btn" style="display: none;">借りる</p></li>
+    <li>
+      <p id="get_Btn">もらう</p>
+      <p id="rental_Btn" style="display: none;">借りる</p>
+    </li>
     <li><a class="text-white" href="{% url 'sunabaco_book:mypage_list' %}" title="Link">マイページ</a></li>
   </ul>
 </header>
@@ -24,7 +26,7 @@
 <main>
   <!-- 検索 -->
   <form method="GET" class="serch_wrap">
-    <input class="serch_textbox" name="query" value="{{ request.GET.query }}" type="text" placeholder="検索"/>
+    <input class="serch_textbox" name="query" value="{{ request.GET.query }}" type="text" placeholder="検索" />
     <button type="submit"><img src="../../../static/img/icon_surch.png" alt="検索"></button>
   </form>
   <div class="sort_wrap">
@@ -34,15 +36,20 @@
 
   <div class="books" id="rental_Box">
     {% for book in bookimage_list %}
-    {% if book.lending == 0 %}
+    {% if book.lending == 0 or book.lending == 1 %}
     <div class="box">
       <div class="card-image waves-effect waves-block waves-light">
         <a href="{% url 'sunabaco_book:detail' book.id %}">
           <img class="activator" src="{{ book.image.url }}">
         </a>
+        {% if book.book_status == 1 %}
+        <em class="text-gray-700">貸し出し中!</em>
+        {% endif %}
       </div>
     </div>
+
     {% endif %}
+
     {% endfor %}
   </div>
 
@@ -55,6 +62,9 @@
         <a href="{% url 'sunabaco_book:detail' book.id %}">
           <img class="activator" src="{{ book.image.url }}">
         </a>
+        {% if book.book_status == 1 %}
+        <em class="text-gray-700">貸し出し中!</em>
+        {% endif %}
       </div>
     </div>
     {% endif %}
@@ -70,14 +80,14 @@
 <script type="text/javascript">
   $(function () {
     $("#get_Btn").click(function () {
-      
+
       $("#get_Btn").css("display", "none");
       $("#rental_Btn").css("display", "block");
       $("#rental_Box").css("display", "none");
       $("#get_Box").css("display", "grid");
     });
     $("#rental_Btn").click(function () {
-      
+
       $("#get_Btn").css("display", "block");
       $("#rental_Btn").css("display", "none");
       $("#get_Box").css("display", "none");

@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from register.models import User 
 from sunabaco_book.models import Bookimage, Reservation
-from sunabaco_book.forms import ReservationCreateForm, Return_bookForm
+from sunabaco_book.forms import ReservationCreateForm, Return_bookForm, BookimageCreateForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.template.context_processors import media
 from django.http import Http404
@@ -43,6 +43,14 @@ class BookimageDetailView(generic.DetailView):
     model = Bookimage
 
 book_detail = BookimageDetailView.as_view()
+
+# ------------------------------------------------------------------
+@method_decorator(login_required, name='dispatch')
+class BookimageCreateView(generic.CreateView):
+    model = Bookimage
+    form_class = BookimageCreateForm
+
+book_create = BookimageCreateView.as_view()
 
 # ------------------------予約view--------------------------------------
 @method_decorator(login_required, name='dispatch')
@@ -87,8 +95,9 @@ class ReturnCreate(generic.CreateView):
         post_pk = self.kwargs['pk']
         post = get_object_or_404(Bookimage, pk=post_pk)
         user = self.request.user.id
-        for rental in Reservation.objects.all():
-            if post.book_status == 1 and user == rental.lending_user_id:
+        for rental in Reservation.objects.filter(lending_user_id=user):
+            print(rental.book_id)
+            if post.book_status == 1 and post.id == rental.book_id:
                 Bookimage.objects.filter(pk=post_pk).update(book_status=0)
                 messages.success(self.request, 'ご返却ありがとうございます。')
                 return redirect('sunabaco_book:return_book', pk=post_pk)

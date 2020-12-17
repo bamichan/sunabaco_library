@@ -19,16 +19,12 @@
         {% endif %}
 
 
-        <form method="post" class="h-full">
+        <form method="post">
 
             {% csrf_token %}
             {{ form.as_p }}
             <div class="w-full text-center mx-auto">
-                <button type="button"
-                    class="border border-indigo-500 bg-indigo-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-indigo-600 focus:outline-none focus:shadow-outline">
-                    返却する
-                </button>
-
+                <input type="submit" value="返却する" class="border border-indigo-500 bg-indigo-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-indigo-600 focus:outline-none focus:shadow-outline">
             </div>
 
         </form>

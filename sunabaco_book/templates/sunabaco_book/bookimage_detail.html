@@ -2,14 +2,19 @@
 {% block head_title %}SUNABACO図書館{% endblock%}
 {% block content %}
 
-<div class="flex justify-center items-center">
+<div class="flex justify-center">
     <img class="h-64 object-cover" src="{{ bookimage.image.url }}" alt="作品">
     <p>{{ bookimage.title }}</p>
 
+    {% if bookimage.lending == 1 and bookimage.book_status == 0 %}
     <div>
-        <a href="{% url 'sunabaco_book:reservation_book' bookimage.id %}">レンタルする</a>
+        <a href="{% url 'sunabaco_book:reservation_book' bookimage.id %}">もらう</a>
     </div>
-
+    {% elif bookimage.book_status == 0 %}
+    <div>
+        <a href="{% url 'sunabaco_book:reservation_book' bookimage.id %}">かりる</a>
+    </div>
+    {% endif %}
 </div>
 <div>
     <a href="{% url 'sunabaco_book:list' %}">戻る</a>

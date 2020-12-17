@@ -25,7 +25,7 @@
 
     <div class="row">
         <div class="col s6 m4">
-            <p>{{ user.name }}</p>
+            <p>{{ user.first_name }}さん、こんにちは。</p>
         </div>
     </div>
 
@@ -34,13 +34,15 @@
     {% if history %}
     <div class="col s6 m4">
         <div class="card">
-            <div class="card-image waves-effect waves-block waves-light">
+            <div class="text-center p-3 sm:flex sm:justify-between sm:m-0">
                 <p>{{ history.book_image.title }}</p>
                 {% if history.book_image.book_status == 0 %}
-                <p>貸し出しOK</p>
-                {% else %}
-                <p>貸し出し中</p>
+                <p>返却済み</p>
+                {% else  %}
+                <p><a href="{% url 'sunabaco_book:return_book' history.book_id %}">現在この本を借りています</a></p>
                 {% endif %}
+                <p>返却日　{{ history.return_date }}</p>
+                
             </div>
         </div>
     </div>

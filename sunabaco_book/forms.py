@@ -4,6 +4,13 @@ from django import forms
 from bootstrap_datepicker_plus import DatePickerInput
 
 
+class BookimageCreateForm(forms.ModelForm):
+
+    class Meta:
+        model = Bookimage
+        fields = ['title', 'genre', 'Author', 'body', 'image']
+
+
 class ReservationCreateForm(forms.ModelForm):
     
     class Meta:

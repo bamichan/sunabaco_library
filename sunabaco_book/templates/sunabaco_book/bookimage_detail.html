@@ -2,14 +2,16 @@
 {% block head_title %}SUNABACO図書館{% endblock%}
 {% block content %}
 
-<div>
-    <img class="block w-full object-cover" src="{{ bookimage.image.url }}" alt="作品">
+<div class="flex justify-center items-center">
+    <img class="h-64 object-cover" src="{{ bookimage.image.url }}" alt="作品">
     <p>{{ bookimage.title }}</p>
-</div>
-
 
     <div>
         <a href="{% url 'sunabaco_book:reservation_book' bookimage.id %}">レンタルする</a>
     </div>
 
+</div>
+<div>
+    <a href="{% url 'sunabaco_book:list' %}">戻る</a>
+</div>
 {% endblock content %}

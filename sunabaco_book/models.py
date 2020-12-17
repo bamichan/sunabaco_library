@@ -25,11 +25,11 @@ BOOK_GENRE = [
 ]
 
 class Bookimage(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField('タイトル', max_length=64, null=False)
-    isbn = models.CharField('ISBN', max_length=13, help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
     genre = models.CharField('本のジャンル', max_length=21, choices=BOOK_GENRE, null=False)
     Author = models.CharField('本の著者', max_length=32, null=False)
-    body = models.TextField('本の説明', max_length=512, null=False)
+    body = models.TextField('本の説明', max_length=512, null=True)
     image = models.ImageField('本のイメージ', upload_to='upload_to_book', null=False)
     lending = models.PositiveSmallIntegerField('レンタルモード', default=0, validators=[MinValueValidator(0), MaxValueValidator(3)], null=False)
     book_status = models.PositiveSmallIntegerField('本の貸し出し状態', default=0, validators=[MinValueValidator(0), MaxValueValidator(2)], null=False)
@@ -67,33 +67,32 @@ class Bookimage(models.Model):
         new_image = File(im_io, name=image.name)
         return new_image
 
-# ---------------------------------------------------------------
+# --------------------------本のレンタル履歴-------------------------------------
 class Reservation(models.Model):
     """予約管理"""
     book_image = models.ForeignKey(Bookimage, on_delete=models.CASCADE)
     lending_user_id = models.UUIDField(editable=False)
     return_date = models.DateField(verbose_name='返却日 日付', blank=True, null=False,)
-    isbn = models.CharField('ISBN', max_length=13)
+    book_id = models.UUIDField(editable=False)
     created_at = models.DateTimeField(default=timezone.now)
 
     def __int__(self):
          return self.return_date
 
-# # ---------------------------comment------------------------------------
-# JOB_CHOICES = [
-#     ('デザイン', 'デザイン'),
-#     ('ホームページ制作', 'ホームページ制作'),
-#     ('コーポレートサイト', 'コーポレートサイト'),
-#     ('LP制作', 'LP制作'),
-#     ('レスポンシブデザイン、webサイト修正依頼', 'レスポンシブデザイン、webサイト修正依頼'),
-#     ('その他', 'その他'),
-# ]
-# class Comment(models.Model):
-#     name = models.CharField('お名前', max_length=64, null=False)
-#     client_email = models.EmailField('Email', max_length=255, null=False)
-#     job = models.CharField('お問い合わせ（カテゴリ）', max_length=21, choices=JOB_CHOICES, null=False)
-#     text = models.TextField('依頼内容', max_length=512, null=False)
-#     created_at = models.DateTimeField(default=timezone.now)
+# ---------------------------Review------------------------------------
+SCORE_CHOICES = (
+    (1, '★1'),
+    (2, '★2'),
+    (3, '★3'),
+    (4, '★4'),
+    (5, '★5'),
+)
+class Review(models.Model):
+    """評価"""
+    point = models.IntegerField('評価点', choices=SCORE_CHOICES)
+    body = models.TextField('本の感想', max_length=512, null=True)
+    target = models.ForeignKey(Bookimage, verbose_name='評価対象の本', on_delete=models.CASCADE)
 
-#     def __str__(self):
-#         return self.text
+    def __str__(self):
+        # 'よくわかるPythonの本 - ★5' のように返す
+        return '{} - {}'.format(self.target.title, self.get_point_display())

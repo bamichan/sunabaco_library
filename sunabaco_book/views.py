@@ -59,7 +59,7 @@ class ReservationCreate(generic.CreateView):
             reservation = form.save(commit=False)
             post.book_status = 1
             post.save()
-            reservation.isbn = post.isbn
+            reservation.book_id = post.id
             reservation.book_image = post
             reservation.lending_user_id = self.request.user.id
             reservation.save()

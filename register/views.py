@@ -19,12 +19,7 @@ from .forms import (
     MyPasswordResetForm, MySetPasswordForm, EmailChangeForm
 )
 
-
 User = get_user_model()
-
-
-class Top(generic.TemplateView):
-    template_name = 'register/top.html'
 
 
 class Login(LoginView):
@@ -35,7 +30,7 @@ class Login(LoginView):
 
 class Logout(LogoutView):
     """ログアウトページ"""
-    template_name = 'register/top.html'
+    template_name = 'sunabaco_book/bookimage_list.html'
 
 
 class UserCreate(generic.CreateView):

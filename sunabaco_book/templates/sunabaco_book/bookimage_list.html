@@ -1,66 +1,89 @@
 {% extends 'sunabaco_book/base.html' %}
 
-{% block head_title %}図書館{% endblock %}
+{% block head_title %}SUNABACO図書館{% endblock%}
 
 {% block content %}
-<header class="main_header">
-    <div class="header_upper">
-        <h1>SUNABACO図書館</h1>
-        <div class="navi">
-            <a href="http://" class="notion"><img src="static/img/icon_bell_white.png" alt="notion"></a>
-            <a href="http://" class="menu"><span class="material-icons md-36 md-light">menu</span></a>
-        </div>
 
+<header class="main_header">
+  <div class="header_upper">
+    <h1>SUNABACO図書館</h1>
+    <div class="navi">
+      <a href="http://" class="notion"><img src="../../../static/img/icon_bell_white.png" alt="notion"></a>
+      <a href="http://" class="menu"><span class="material-icons md-36 md-light">menu</span></a>
     </div>
-    <ul>
-        <li><img src="static/img/icon_books.png" alt="HOME" class="header_home"></li>
-        <li>かえす</li>
-        <li>かす</li>
-        <li>あげる</li>
-        <li>もらう</li>
-    </ul>
+
+  </div>
+  <ul>
+    <li><img src="../../../static/img/icon_books.png" alt="HOME" class="header_home"></li>
+    <li><p id="get_Btn">もらう</p></li>
+    <li><p id="rental_Btn" style="display: none;">借りる</p></li>
+    <li><a class="text-white" href="{% url 'sunabaco_book:mypage_list' %}" title="Link">マイページ</a></li>
+  </ul>
 </header>
 
 <main>
+  <!-- 検索 -->
+  <form method="GET" class="serch_wrap">
+    <input class="serch_textbox" name="query" value="{{ request.GET.query }}" type="text" placeholder="検索"/>
+    <button type="submit"><img src="../../../static/img/icon_surch.png" alt="検索"></button>
+  </form>
+  <div class="sort_wrap">
+    <p>並べ替え ▼</p>
+  </div>
+  <!-- 本棚 -->
 
-
-    <div class="w-9/12 m-auto">
-        <form class="m-4 flex justify-center">
-            <input name="query" value="{{ request.GET.query }}" type="text"
-                class="rounded-l-lg p-4 border-t mr-0 border-b border-l text-gray-800 border-gray-200 bg-white"
-                placeholder="BookTitl or Author" />
-            <button type="submit"
-                class="px-8 rounded-r-lg bg-yellow-400  text-gray-800 font-bold p-4 uppercase border-yellow-500 border-t border-b border-r">Serch</button>
-        </form>
+  <div class="books" id="rental_Box">
+    {% for book in bookimage_list %}
+    {% if book.lending == 0 %}
+    <div class="box">
+      <div class="card-image waves-effect waves-block waves-light">
+        <a href="{% url 'sunabaco_book:detail' book.id %}">
+          <img class="activator" src="{{ book.image.url }}">
+        </a>
+      </div>
     </div>
+    {% endif %}
+    {% endfor %}
+  </div>
 
 
-    <div class="row">
-        {% for book in bookimage_list %}
-        {% if book %}
-        <div class="col s6 m4">
-            <div class="card">
-                <div class="card-image waves-effect waves-block waves-light">
-                    <a class="block w-full h-full" href="{% url 'sunabaco_book:detail' book.id %}" title="Link">
-                        <img class="activator" src="{{ book.image.url }}">
-                    </a>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-        {% endfor %}
+  <div class="books" id="get_Box" style="display: none;">
+    {% for book in bookimage_list %}
+    {% if book.lending == 1 %}
+    <div class="box">
+      <div class="card-image waves-effect waves-block waves-light">
+        <a href="{% url 'sunabaco_book:detail' book.id %}">
+          <img class="activator" src="{{ book.image.url }}">
+        </a>
+      </div>
     </div>
-
-    <div class="h-32">
-        <a class="block w-full h-full" href="{% url 'sunabaco_book:mypage_list' %}" title="Link">mypage</a>
-    </div>
-
-    
+    {% endif %}
+    {% endfor %}
+  </div>
 
 </main>
 
 <footer>
 
 </footer>
+
+<script type="text/javascript">
+  $(function () {
+    $("#get_Btn").click(function () {
+      
+      $("#get_Btn").css("display", "none");
+      $("#rental_Btn").css("display", "block");
+      $("#rental_Box").css("display", "none");
+      $("#get_Box").css("display", "grid");
+    });
+    $("#rental_Btn").click(function () {
+      
+      $("#get_Btn").css("display", "block");
+      $("#rental_Btn").css("display", "none");
+      $("#get_Box").css("display", "none");
+      $("#rental_Box").css("display", "grid");
+    });
+  });
+</script>
 
 {% endblock content %}

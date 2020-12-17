@@ -6,7 +6,7 @@
 <div class="container">
 
     <!-- メッセージ -->
-    <div class="m-16">
+    <div class="">
         {% if messages %}
         {% for message in messages %}
         <div class="alert alert-info" role="alert">
@@ -19,18 +19,24 @@
         {% endif %}
 
 
-        <form method="post">
+        <form method="post" class="h-full">
 
             {% csrf_token %}
             {{ form.as_p }}
-            <div class="text-center">
-                <button type="submit"
-                    class="border border-indigo-500 text-indigo-500 rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:text-white hover:bg-indigo-600 focus:outline-none focus:shadow-outline">
+            <div class="w-full text-center mx-auto">
+                <button type="button"
+                    class="border border-indigo-500 bg-indigo-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-indigo-600 focus:outline-none focus:shadow-outline">
                     返却する
                 </button>
+
             </div>
 
         </form>
+
+        <div>
+            <a href="{% url 'sunabaco_book:list' %}">戻る</a>
+        </div>
+        
     </div>
 </div>
 {% endblock content %}

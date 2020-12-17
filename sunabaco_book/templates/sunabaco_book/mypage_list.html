@@ -14,7 +14,7 @@
     </div>
     <ul>
         <li><img src="../../../static/img/icon_books.png" alt="HOME" class="header_home"></li>
-        <li>かえす</li>
+        <li><a href=""></a> かえす</li>
         <li>かす</li>
         <li>あげる</li>
         <li>もらう</li>
@@ -25,7 +25,7 @@
 
     <div class="row">
         <div class="col s6 m4">
-            <p>{{ user.first_name }}</p>
+            <p>{{ user.name }}</p>
         </div>
     </div>
 
@@ -46,6 +46,10 @@
     </div>
     {% endif %}
     {% endfor %}
+
+    <div>
+        <a href="{% url 'sunabaco_book:list' %}">戻る</a>
+    </div>
 </main>
 
 <footer>

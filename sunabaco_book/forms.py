@@ -12,9 +12,12 @@ class ReservationCreateForm(forms.ModelForm):
         widgets = {
                 'return_date': DatePickerInput(
                     format='%Y-%m-%d',
+                    attrs={'readonly': 'true'},
                     options={
                         'locale': 'ja',
                         'dayViewHeaderFormat': 'YYYY年 MMMM',
+                        'ignoreReadonly': True,
+                        'allowInputToggle': True,
                     }
             )
         }

@@ -72,8 +72,9 @@ class Reservation(models.Model):
     """予約管理"""
     book_image = models.ForeignKey(Bookimage, on_delete=models.CASCADE)
     lending_user_id = models.UUIDField(editable=False)
-    return_date = models.DateField(verbose_name='返却日 日付', blank=True, null=False,)
     book_id = models.UUIDField(editable=False)
+    book_status = models.PositiveSmallIntegerField('本の貸し出し状態', validators=[MinValueValidator(0), MaxValueValidator(2)], null=False)
+    return_date = models.DateField(verbose_name='返却日 日付', blank=True, null=False,)
     created_at = models.DateTimeField(default=timezone.now)
 
     def __int__(self):

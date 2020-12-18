@@ -2,6 +2,7 @@ from django import forms
 from sunabaco_book.models import Bookimage, Reservation
 from django import forms
 from bootstrap_datepicker_plus import DatePickerInput
+import bootstrap_datepicker_plus as datetimepicker
 
 
 class BookimageCreateForm(forms.ModelForm):

@@ -20,13 +20,12 @@
         <h4 class="ml-3">履歴</h4>
         {% for history in history_list reversed %}
         {% if history %}
-        {{ user.id }}
         <div class="col s6 m4">
             <div class="card">
                 <div class="text-left p-3 sm:flex sm:m-0">
                     {{ forloop.revcounter }} :
                     <p>{{ history.book_image.title }}</p>
-                    {% if history.book_image.book_status == 1 and user.id == history.lending_user_id %}
+                    {% if history.book_status == 1 and user.id == history.lending_user_id %}
                     <p class="mx-3">返却日　{{ history.return_date }}</p>
                     <p class="mx-3">
                         <a href="{% url 'sunabaco_book:return_book' history.book_id %}">現在この本を借りています</a>
@@ -35,8 +34,6 @@
                     <p class="mx-3">返却済み</p>
                     {% endif %}
                 </div>
-                {{ history.lending_user_id }}
-
             </div>
         </div>
         {% endif %}

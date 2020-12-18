@@ -68,6 +68,7 @@ class ReservationCreate(generic.CreateView):
             post.book_status = 1
             post.save()
             reservation.book_id = post.id
+            reservation.book_status = post.book_status
             reservation.book_image = post
             reservation.lending_user_id = self.request.user.id
             reservation.save()
@@ -97,8 +98,9 @@ class ReturnCreate(generic.CreateView):
         user = self.request.user.id
         for rental in Reservation.objects.filter(lending_user_id=user):
             print(rental.book_id)
-            if post.book_status == 1 and post.id == rental.book_id:
+            if post.book_status == 1 and rental.book_status == 1:
                 Bookimage.objects.filter(pk=post_pk).update(book_status=0)
+                rental.book_status.filter(pk=post_pk).update(book_status=0)
                 messages.success(self.request, 'ご返却ありがとうございます。')
                 return redirect('sunabaco_book:return_book', pk=post_pk)
             else:

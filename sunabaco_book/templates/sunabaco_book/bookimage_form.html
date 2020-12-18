@@ -1,5 +1,4 @@
 {% extends 'sunabaco_book/base.html' %}
-{% load crispy_forms_tags %}
 
 {% block head_title %}図書館{% endblock %}
 
@@ -19,20 +18,24 @@
         {% endfor %}
         {% endif %}
 
-        <form method="post">
-
+        <form action="" method="POST">
+            {{ form.non_field_errors }}
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+                {{ field }}
+                {{ field.errors }}
+            </div>
+            {% endfor %}
             {% csrf_token %}
-            {% crispy form %}
-
             <div class="text-center">
                 <input type="submit" value="SUNABACO本棚に寄付する。" class="border border-indigo-500 text-indigo-500 rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:text-white hover:bg-indigo-600 focus:outline-none focus:shadow-outline">
             </div>
-
         </form>
+
+        <div>
+            <a href="{% url 'sunabaco_book:list' %}">戻る</a>
+        </div>
     </div>
-    <div>
-        <a href="{% url 'sunabaco_book:list' %}">戻る</a>
-    </div>
-    
 
 {% endblock content %}

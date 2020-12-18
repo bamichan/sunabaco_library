@@ -9,7 +9,8 @@ class BookimageCreateForm(forms.ModelForm):
     class Meta:
         model = Bookimage
         fields = ['title', 'genre', 'Author', 'body', 'image']
-
+        
+        
 
 class ReservationCreateForm(forms.ModelForm):
     

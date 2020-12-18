@@ -2,6 +2,62 @@
 {% block head_title %}SUNABACO図書館{% endblock%}
 {% block content %}
 
+<header class="main_header">
+  <div class="header_upper">
+    <h1>SUNABACO図書館</h1>
+    <div class="navi">
+      <a href="http://" class="notion"><img src="img/icon_bell_white.png" alt="notion"></a>
+      <a href="http://" class="menu"><span class="material-icons md-36 md-light">menu</span></a>
+    </div>
 
+  </div>
+  <ul>
+    <li><img src="img/icon_books.png" alt="HOME" class="header_home"></li>
+    <li>もらう</li>
+    <li>あげる</li>
+  </ul>
+</header>
+<main>
+  <div class="book_image_functions">
+    <div class="book_image">
+      <img src="img/book_sample1.png" alt="書影">
+    </div>
+    <div class="book_functions">
+      <button class="book_function_button">貰う</button>
+      <button class="book_function_button">あげる</button>
+      <button class="book_function_button">借りる</button>
+      <button class="book_function_button">返す</button>
+    </div>
+  </div>
+  <div class="book_info">
+    <table>
+      <tr>
+        <th class="book_isbn">ISBN</th>
+        <td class="book_content_isbn">978-4-8222-8960-7</td>
+      </tr>
+      <tr>
+        <th class="book_title">タイトル</th>
+        <td class="book_content_title">FACTFULNESS(ファクトフルネス) 10の思い込みを乗り越え、データを基に世界を正しく見る習慣</td>
+      </tr>
+      <tr>
+        <th class="book_author">著者</th>
+        <td class="book_content_author">ハンス・ロスリング, オーラ・ロスリング, アンナ・ロスリング・ロンランド,上杉 周作 (翻訳), 関 美和 (翻訳)</td>
+      </tr>
+      <tr>
+        <th class="book_publishdate">出版年月日</th>
+        <td class="book_content_publishdate">2019/1/11</td>
+      </tr>
+      <tr>
+        <th class="book_publisher">出版社</th>
+        <td class="book_content_publisher">日経BP</td>
+      </tr>
+    </table>
+  </div>
+  
+</main>
+
+<footer>
+
+</footer>
 
 {% endblock content %}

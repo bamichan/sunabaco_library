@@ -1,0 +1,37 @@
+{% extends 'sunabaco_book/base.html' %}
+{% block head_title %}ログイン|SUNABACO図書館{% endblock%}
+{% block content %}
+
+<!-- ログインページ（会員登録ページとは別） -->
+<header class="main_header">
+  <div class="header_upper">
+    <h1>SUNABACO図書館</h1>
+    <div class="navi">
+      <a href="http://" class="notion"><img src="img/icon_bell_white.png" alt="notion"></a>
+      <a href="http://" class="menu"><span class="material-icons md-36 md-light">menu</span></a>
+    </div>
+
+  </div>
+  <ul>
+    <li><img src="img/icon_books.png" alt="HOME" class="header_home"></li>
+    <li>もらう</li>
+    <li>あげる</li>
+  </ul>
+</header>
+<main>
+<h2 class="login">ログイン</h2>
+<div class="login_buttons">
+  <button class="login_facebook">Facebookでログイン</button>
+  <button class="login_twitter">Twitterでログイン</button>
+</div>
+<div class="register">
+  <p>新規会員登録</p>
+</div>
+
+</main>
+
+<footer>
+
+</footer>
+
+{% endblock content %}

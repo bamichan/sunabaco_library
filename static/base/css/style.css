@@ -208,3 +208,51 @@ button>img{
 }
 
 /*** 本詳細ここまで ***/
+/*** ログイン ***/
+h2.login{
+  margin: 72px 0 0 0px;
+  text-align: center;
+  font-family: serif;
+  font-size: 20px;
+  color: #312F31;
+}
+.login_buttons{
+  margin: 70px 0 0 0px;
+  font-size: 15px;
+  text-align: center;
+}
+.login_facebook{
+  width: 277px;
+  height: 39px;
+  color: #0039FF;
+  background-color: white;
+  box-shadow: 0px 3px 6px #00000029;
+  border: 1px solid #0039FF;
+  border-radius: 20px;
+  opacity: 1;
+}
+.login_twitter{
+  width: 277px;
+  height: 39px;
+  margin-top: 15px;
+  color: #0DC2FF;
+  background-color: white;
+  box-shadow: 0px 3px 6px #00000029;
+  border: 1px solid #0DC2FF;
+  border-radius: 20px;
+  opacity: 1;
+}
+.register{
+  margin-top: 125px;
+  display: flex;
+  justify-content: center;
+}
+.register p{
+  text-align: center;
+  font-size: 14px;
+  color: #312F31;
+  width: 120px;
+  border-bottom: 1px solid #707070;
+}
+
+/*** ログインここまで ***/

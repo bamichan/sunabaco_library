@@ -97,10 +97,9 @@ class ReturnCreate(generic.CreateView):
         post = get_object_or_404(Bookimage, pk=post_pk)
         user = self.request.user.id
         for rental in Reservation.objects.filter(lending_user_id=user):
-            print(rental.book_id)
             if post.book_status == 1 and rental.book_status == 1:
+                Reservation.objects.filter(book_id=post_pk).update(book_status=0)
                 Bookimage.objects.filter(pk=post_pk).update(book_status=0)
-                rental.book_status.filter(pk=post_pk).update(book_status=0)
                 messages.success(self.request, 'ご返却ありがとうございます。')
                 return redirect('sunabaco_book:return_book', pk=post_pk)
             else:

@@ -29,9 +29,9 @@ class BookimageAdmin(admin.ModelAdmin):
 
 @admin.register(Reservation)
 class ReservationAdmin(admin.ModelAdmin):
-    list_display = ('id', 'book_image', 'lending_user_id', 'book_id', 'return_date', 'created_at')
-    list_display_link = ('id', 'book_image', 'lending_user_id', 'book_id', 'return_date', 'created_at')
-    search_fields = ('id', 'book_image', 'lending_user_id', 'book_id', 'return_date', 'created_at')
+    list_display = ('id', 'book_image', 'lending_user_id', 'book_id', 'book_status', 'return_date', 'created_at')
+    list_display_link = ('id', 'book_image', 'lending_user_id', 'book_id', 'book_status', 'return_date', 'created_at')
+    search_fields = ('id', 'book_image', 'lending_user_id', 'book_id', 'book_status', 'return_date', 'created_at')
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):

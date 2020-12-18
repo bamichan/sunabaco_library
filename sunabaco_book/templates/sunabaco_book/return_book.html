@@ -17,14 +17,12 @@
         </div>
         {% endfor %}
         {% endif %}
-
-
         <form method="post">
 
             {% csrf_token %}
             {{ form.as_p }}
-            <div class="w-full text-center mx-auto">
-                <input type="submit" value="返却する" class="border border-indigo-500 bg-indigo-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-indigo-600 focus:outline-none focus:shadow-outline">
+            <div class="text-center">
+                <input type="submit" value="返却する" class="border w-48 h-12 border-orange-400 text-gray-700 rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:text-white hover:bg-orange-400 focus:outline-none focus:shadow-outline">
             </div>
 
         </form>
@@ -32,7 +30,7 @@
         <div>
             <a href="{% url 'sunabaco_book:list' %}">戻る</a>
         </div>
-        
+
     </div>
 </div>
 {% endblock content %}

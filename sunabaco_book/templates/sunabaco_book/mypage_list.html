@@ -3,53 +3,52 @@
 {% block head_title %}図書館{% endblock %}
 
 {% block content %}
-<header class="main_header">
-    <div class="header_upper">
-        <h1>SUNABACO図書館</h1>
-        <div class="navi">
-            <a href="http://" class="notion"><img src="/static/img/icon_bell_white.png" alt="notion"></a>
-            <a href="http://" class="menu"><span class="material-icons md-36 md-light">menu</span></a>
-        </div>
-
-    </div>
-    <ul>
-        <li><img src="../../../static/img/icon_books.png" alt="HOME" class="header_home"></li>
-        <li><a class="text-white" href="{% url 'sunabaco_book:create' %}">あげる</a></li>
-    </ul>
-</header>
-
 <main>
-
-    <div class="row">
-        <div class="col s6 m4">
-            <p>{{ user.first_name }}さん、こんにちは。</p>
-        </div>
-    </div>
-
-    <h4>履歴</h4>
-    {% for history in history_list %}
-    {% if history %}
-    <div class="col s6 m4">
-        <div class="card">
-            <div class="text-center p-3 sm:flex sm:justify-between sm:m-0">
-                <p>{{ history.book_image.title }}</p>
-                {% if history.book_image.book_status == 0 %}
-                <p>返却済み</p>
-                {% else  %}
-                <p><a href="{% url 'sunabaco_book:return_book' history.book_id %}">現在この本を借りています</a></p>
+    <div class="container">
+        <div class="row">
+            <div class="col s6 m4">
+                {% if user.first_name %}
+                <p>{{ user.first_name }}さん、こんにちは。</p>
+                {% else %}
+                <p></p>
                 {% endif %}
-                <p>返却日　{{ history.return_date }}</p>
-                
+            </div>
+            <div class="ml-3">
+                <a href="{% url 'register:logout' %}">logout</a>
             </div>
         </div>
-    </div>
-    {% endif %}
-    {% endfor %}
+        <h4 class="ml-3">履歴</h4>
+        {% for history in history_list reversed %}
+        {% if history %}
+        {{ user.id }}
+        <div class="col s6 m4">
+            <div class="card">
+                <div class="text-left p-3 sm:flex sm:m-0">
+                    {{ forloop.revcounter }} :
+                    <p>{{ history.book_image.title }}</p>
+                    {% if history.book_image.book_status == 1 and user.id == history.lending_user_id %}
+                    <p class="mx-3">返却日　{{ history.return_date }}</p>
+                    <p class="mx-3">
+                        <a href="{% url 'sunabaco_book:return_book' history.book_id %}">現在この本を借りています</a>
+                    </p>
+                    {% else %}
+                    <p class="mx-3">返却済み</p>
+                    {% endif %}
+                </div>
+                {{ history.lending_user_id }}
 
-    <div>
-        <a href="{% url 'sunabaco_book:list' %}">戻る</a>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+        <div class="ml-3">
+            <a href="{% url 'sunabaco_book:list' %}">戻る</a>
+        </div>
     </div>
 </main>
+
+
 
 <footer>
 

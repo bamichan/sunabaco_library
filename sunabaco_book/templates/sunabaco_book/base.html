@@ -7,24 +7,48 @@
 
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--Import Google Icon Font-->
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}?20200925">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="{% static 'base/css/style.css'%}">
-    <link rel="stylesheet" href="{% static 'base/css/style_tb.css'%}">
-    <title>sunabaco 図書館 - {% block head_title %}{% endblock %}</title>
-  </head>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--Import Google Icon Font-->
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}?20200925">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="{% static 'base/css/style.css'%}">
+  <link rel="stylesheet" href="{% static 'base/css/style_tb.css'%}">
+  <title>sunabaco 図書館 - {% block head_title %}{% endblock %}</title>
+</head>
+
 <body>
 
-    {% block content %}
-    {% endblock %}
-  
+  <header class="main_header">
+    <div class="header_upper">
+      <h1>SUNABACO図書館</h1>
+      <div class="navi">
+        <a href="http://" class="notion"><img src="../../../static/img/icon_bell_white.png" alt="notion"></a>
+        <a href="http://" class="menu"><span class="material-icons md-36 md-light">menu</span></a>
+      </div>
+
+    </div>
+    <ul>
+      <li><img src="../../../static/img/icon_books.png" alt="HOME" class="header_home"></li>
+      <li>
+        {% if bookimage_list %}
+        <p id="get_Btn">もらう</p>
+        {% endif %}
+        <p id="rental_Btn" style="display: none;">借りる</p>
+      </li>
+      <li><a class="text-white" href="{% url 'sunabaco_book:mypage_list' %}" title="Link">マイページ</a></li>
+    </ul>
+  </header>
+
+  {% block content %}
+  {% endblock %}
+
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
+
 </html>

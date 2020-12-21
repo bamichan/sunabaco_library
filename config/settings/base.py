@@ -21,7 +21,6 @@ INSTALLED_APPS = [
     "crispy_tailwind",
     'social_django',
     'bootstrap4',
-    'bootstrap_datepicker_plus',
 ]
 
 TAILWIND_APP_NAME = 'theme'

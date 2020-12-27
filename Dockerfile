@@ -10,7 +10,17 @@ COPY . /sunabaco_app
 COPY ./nginx/gunicorn /var/run/gunicorn
 COPY ./nginx /etc/nginx
 
+RUN apt-get update && apt-get install -y \
+    libzbar0 \
+    libgl1-mesa-dev \
+    cheese \
+    qv4l2 \
+    && apt-get -y clean \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN pip install --upgrade pip
+RUN pip install pyzbar
+RUN pip install pyzbar[scripts]
 RUN pip install gunicorn
 RUN pip install -r requirements.txt
 

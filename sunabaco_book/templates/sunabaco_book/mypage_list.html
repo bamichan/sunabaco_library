@@ -4,45 +4,47 @@
 
 {% block content %}
 <main>
-    <div class="container">
-        <div class="row">
-            <div class="col s6 m4">
-                {% if user.first_name %}
-                <p>{{ user.first_name }}さん、こんにちは。</p>
-                {% else %}
-                <p></p>
-                {% endif %}
-            </div>
-            <div class="ml-3">
-                <a href="{% url 'register:logout' %}">logout</a>
-            </div>
-        </div>
-        <h4 class="ml-3">履歴</h4>
-        {% for history in history_list reversed %}
-        {% if history %}
-        <div class="col s6 m4">
-            <div class="card">
-                <div class="text-left p-3 sm:flex sm:m-0">
-                    {{ forloop.revcounter }} :
-                    <p>{{ history.book_image.title }}</p>
-                    {% if history.book_status == 1 and user.id == history.lending_user_id %}
-                    <p class="mx-3">返却日　{{ history.return_date }}</p>
-                    <p class="mx-3">
-                        <a href="{% url 'sunabaco_book:return_book' history.book_id %}">現在この本を借りています</a>
-                    </p>
-                    {% else %}
-                    <p class="mx-3">返却済み</p>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="col s6 m4">
+        {% if user.first_name %}
+        <p>{{ user.first_name }}さん、こんにちは。</p>
+        {% else %}
+        <p></p>
         {% endif %}
-        {% endfor %}
-
-        <div class="ml-3">
-            <a href="{% url 'sunabaco_book:list' %}">戻る</a>
-        </div>
+      </div>
+      <div class="ml-3">
+        <a href="{% url 'register:logout' %}">logout</a>
+      </div>
     </div>
+    <h4 class="ml-3">履歴</h4>
+    {% for history in history_list reversed %}
+    {% if history %}
+    <div class="col s6 m4">
+      <div class="card">
+        <div class="text-left p-3 sm:flex sm:m-0">
+          {{ forloop.revcounter }} :
+          <p>{{ history.book_image.title }}</p>
+          {% if history.book_status == 1 and user.id == history.lending_user_id %}
+          <p class="mx-3">返却日　{{ history.return_date }}</p>
+          <p class="mx-3">
+            <a href="{% url 'sunabaco_book:return_book' history.book_id %}">現在この本を借りています</a>
+          </p>
+          {% else %}
+          <p class="mx-3">返却済み</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    
+    <video id="local_video" autoplay style="width: 320px; height: 240px; border: 1px solid black;"></video>
+    
+    <div class="ml-3">
+      <a href="{% url 'sunabaco_book:list' %}">戻る</a>
+    </div>
+  </div>
 </main>
 
 

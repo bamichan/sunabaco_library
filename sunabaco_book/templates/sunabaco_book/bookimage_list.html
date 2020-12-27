@@ -51,6 +51,54 @@
     {% endif %}
     {% endfor %}
   </div>
+  <div class="container">
+    <div class="card">
+      <div class="card-header">楽天Booksで本を探す</div>
+      <div class="card-body">
+        <form action="{% url 'sunabaco_book:list' %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group row">
+            <div class="col-sm-3">
+              <input type="text" class="form-control sbc_field" name="key_word" placeholder="タイトル" />
+            </div>
+            <div class="col-sm-3">
+              <input type="text" class="form-control sbc_field" name="author" placeholder="著者" />
+            </div>
+            <input type="submit" value="探す"
+              class="border w-48 h-12 m-auto border-orange-400 text-gray-700 rounded-md px-4 py-2 transition duration-500 ease select-none hover:text-white hover:bg-orange-400 focus:outline-none focus:shadow-outline">
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card">
+      {% for book in result %}
+      <div class=" md:flex-col md:items-center p-3">
+        <div class="w-full h-64 flex justify-center">
+          <p class="w-5">{{ book.Item.author }}</p>
+          <img src="{{book.Item.largeImageUrl}}" alt="book image">
+        </div>
+        <h6 class="flex justify-center w-9/12 p-3 m-auto">{{ book.Item.title }}</h6>
+        <div class="w-10/12 p-3 m-auto">
+          <p class="m-auto pb-3">{{ book.Item.itemCaption }}</p>
+          <p class="m-auto">価格 {{ book.Item.itemPrice }}円（税込）</p>
+          <a href="{{ book.Item.itemUrl }}">楽天Booksで購入</a>
+        </div>
+      </div>
+      {% endfor %}
+
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-info w-64" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <p>{{ message }}</p>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+  </div>
 
 </main>
 

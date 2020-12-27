@@ -18,12 +18,44 @@ from django.template.loader import render_to_string
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.db.models import Q
+import requests
+import os
+from pyzbar.pyzbar import decode
+from pyzbar.pyzbar import ZBarSymbol
+import cv2
+import numpy as np
+
+
+
 def index(request):
     return render(request, 'index.html')
 
 # ------------------------------------------------------------------
 class BookimageListView(generic.ListView):
     model = Bookimage
+    template_name = 'sunabaco_book/bookimage_list.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.POST['key_word']:
+            key_word = request.POST['key_word']
+            pattarn = "&title="
+            key_word = pattarn+key_word
+        elif request.POST['author']:
+            author = request.POST['author']
+            pattarn = "&author="
+            key_word = pattarn+author
+        else:
+            messages.warning(self.request, '入力してください。')
+            return redirect('sunabaco_book:list')
+
+        RAKUTEN_APP_ID = 1058934488319555649
+        REQUEST_URL = f"https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?format=json{key_word}&booksGenreId=001004008&applicationId={RAKUTEN_APP_ID}"
+        response = requests.get(REQUEST_URL)
+        result = []
+        result_book = response.json()["Items"]
+        for book in result_book:
+            result.append(book)
+        return render(request, self.template_name, {'result': result})
     
     def get_queryset(self):
         q_word = self.request.GET.get('query')
@@ -96,7 +128,8 @@ class ReturnCreate(generic.CreateView):
         post_pk = self.kwargs['pk']
         post = get_object_or_404(Bookimage, pk=post_pk)
         user = self.request.user.id
-        for rental in Reservation.objects.filter(lending_user_id=user):
+        rental_list = Reservation.objects.filter(lending_user_id=user, book_status=1)
+        for rental in rental_list:
             if post.book_status == 1 and rental.book_status == 1:
                 Reservation.objects.filter(book_id=post_pk).update(book_status=0)
                 Bookimage.objects.filter(pk=post_pk).update(book_status=0)
@@ -118,7 +151,36 @@ return_book = ReturnCreate.as_view()
 class MypageListView(generic.ListView):
     template_name = 'sunabaco_book/mypage_list.html'
     model = User
+    
 
+    def edit_contrast(self, image, gamma):
+        look_up_table = [np.uint8(255.0 / (1 + np.exp(-gamma * (i - 128.) / 255.))) for i in range(256)]
+        result_image = np.array([look_up_table[value] for value in image.flat], dtype=np.uint8)
+        result_image = result_image.reshape(image.shape)
+        return result_image
+
+    capture = cv2.VideoCapture(0)
+    print(cv2.getBuildInformation())
+    print(type(capture))
+    print(capture.isOpened())
+    
+    while True:
+        ret, frame = capture.read()
+        if ret == False:
+            continue   
+        # グレースケール化してコントラクトを調整する
+        gray_scale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        image = edit_contrast(gray_scale, 5)
+        # 加工した画像からフレームQRコードを取得してデコードする
+        codes = decode(image)
+
+        if len(codes) > 0:
+            for code in codes:
+                print(code)
+
+    capture.release()
+    cv2.destroyAllWindows()
+        
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['history_list'] = Reservation.objects.filter(lending_user_id=self.request.user.id).all()

@@ -159,28 +159,27 @@ class MypageListView(generic.ListView):
         result_image = result_image.reshape(image.shape)
         return result_image
 
-    capture = cv2.VideoCapture(0)
-    print(cv2.getBuildInformation())
-    print(type(capture))
-    print(capture.isOpened())
+    cap = cv2.VideoCapture(0)
     
-    while True:
-        ret, frame = capture.read()
-        if ret == False:
-            continue   
-        # グレースケール化してコントラクトを調整する
-        gray_scale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        image = edit_contrast(gray_scale, 5)
-        # 加工した画像からフレームQRコードを取得してデコードする
-        codes = decode(image)
+    
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    while cap.isOpened():
+        ret,frame = cap.read()
+        if ret == True:
+            d = decode(frame)
+            if d:
+                for barcode in d:
+                    x,y,w,h = barcode.rect
+                    cv2.rectangle(frame,(x,y),(x+w,y+h),(0,0,255),2)
+                    barcodeData = barcode.data.decode('utf-8')
+                    frame = cv2.putText(frame,barcodeData,(x,y-10),font,.5,(0,0,255),2,cv2.LINE_AA)
+            cv2.imshow('frame',frame)
 
-        if len(codes) > 0:
-            for code in codes:
-                print(code)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
 
-    capture.release()
-    cv2.destroyAllWindows()
-        
+    cap.release()
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['history_list'] = Reservation.objects.filter(lending_user_id=self.request.user.id).all()

@@ -21,13 +21,14 @@ INSTALLED_APPS = [
     "crispy_tailwind",
     'social_django',
     'bootstrap4',
+    'sslserver',
 ]
 
 TAILWIND_APP_NAME = 'theme'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
-
 NPM_LIB_PATH = "/usr/lib/node_modules/npm"
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -112,6 +113,7 @@ TIME_ZONE = 'Asia/Tokyo'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'assets')

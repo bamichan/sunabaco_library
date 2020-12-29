@@ -48,7 +48,7 @@ class BookimageListView(generic.ListView):
             messages.warning(self.request, '入力してください。')
             return redirect('sunabaco_book:list')
 
-        RAKUTEN_APP_ID = 1058934488319555649
+        
         REQUEST_URL = f"https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?format=json{key_word}&booksGenreId=001004008&applicationId={RAKUTEN_APP_ID}"
         response = requests.get(REQUEST_URL)
         result = []

@@ -6,4 +6,5 @@ node_modules
 media
 upload_to_profile
 upload_to_book
+.DS_Store
 .vscode

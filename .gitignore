@@ -8,3 +8,6 @@ upload_to_profile
 upload_to_book
 .DS_Store
 .vscode
+foobar.crt
+foobar.key
+foobar.csr

@@ -11,7 +11,8 @@ COPY ./nginx/gunicorn /var/run/gunicorn
 COPY ./nginx /etc/nginx
 
 RUN apt-get update && apt-get install -y \
-    gcc \
+    pkg-config \
+    libgtk2.0-dev \
     libzbar0 \
     libopencv-dev \
     libv4l-dev \

@@ -48,7 +48,7 @@ class BookimageListView(generic.ListView):
             messages.warning(self.request, '入力してください。')
             return redirect('sunabaco_book:list')
 
-        
+        RAKUTEN_APP_ID = 1058934488319555649
         REQUEST_URL = f"https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?format=json{key_word}&booksGenreId=001004008&applicationId={RAKUTEN_APP_ID}"
         response = requests.get(REQUEST_URL)
         result = []
@@ -152,34 +152,58 @@ class MypageListView(generic.ListView):
     template_name = 'sunabaco_book/mypage_list.html'
     model = User
     
-
-    def edit_contrast(self, image, gamma):
-        look_up_table = [np.uint8(255.0 / (1 + np.exp(-gamma * (i - 128.) / 255.))) for i in range(256)]
-        result_image = np.array([look_up_table[value] for value in image.flat], dtype=np.uint8)
+    def edit_contrast(image, gamma):
+        """コントラスト調整"""
+        look_up_table = [np.uint8(255.0 / (1 + np.exp(-gamma * (i - 128.) / 255.)))
+            for i in range(256)]
+        result_image = np.array([look_up_table[value]
+                                for value in image.flat], dtype=np.uint8)
         result_image = result_image.reshape(image.shape)
         return result_image
 
-    cap = cv2.VideoCapture(0)
-    
-    
-    font = cv2.FONT_HERSHEY_SIMPLEX
-    while cap.isOpened():
-        ret,frame = cap.read()
-        if ret == True:
-            d = decode(frame)
-            if d:
-                for barcode in d:
-                    x,y,w,h = barcode.rect
-                    cv2.rectangle(frame,(x,y),(x+w,y+h),(0,0,255),2)
-                    barcodeData = barcode.data.decode('utf-8')
-                    frame = cv2.putText(frame,barcodeData,(x,y-10),font,.5,(0,0,255),2,cv2.LINE_AA)
-            cv2.imshow('frame',frame)
+    cap_cam = cv2.VideoCapture(0)
+    cv2.namedWindow('frame')
+    # カメラが接続できない場合は、exit
+    if not cap_cam.isOpened():
+        print("カメラを開けません")
+        exit()
 
+    while True:
+        # フレームごとにキャプチャ
+        ret, frame = cap_cam.read()
+        #フレームが正しく読み取られた場合、retはTrue
+        if not ret:
+            print("フレームは受信できません。終了しています...")
+            break
+
+        # グレースケール化してコントラストを調整する
+        gray_scale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        image = edit_contrast(gray_scale, 5)
+
+        # 結果のフレーム表示
+        cv2.imshow('frame',gray_scale)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-    cap.release()
+        # 加工した画像からフレームQRコードを取得してデコードする
+        codes = decode(image)
+        if len(codes) > 0:
+            output = codes[0][0].decode('utf-8', 'ignore')
+            print(output)
+            # CSVファイルに書き込み
+            # output_csv = output
+            with open('qr.csv', 'w') as csv_file:
+                writer = csv.writer(csv_file,
+                                    lineterminator='\n')  # 改行コード（\n）を指定しておく
+                writer.writerow([output])
+            if 'output' != None:
+                #cap_cam.read()
+                cap_cam.release()
 
+    # すべて完了したらキャプチャーを解放する
+    #cap_cam.release()
+    cv2.destroyAllWindows()
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['history_list'] = Reservation.objects.filter(lending_user_id=self.request.user.id).all()

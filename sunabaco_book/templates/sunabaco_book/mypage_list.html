@@ -38,9 +38,14 @@
     </div>
     {% endif %}
     {% endfor %}
-    
-    <video id="local_video" autoplay style="width: 320px; height: 240px; border: 1px solid black;"></video>
-    
+  
+    <form method="post" enctype="multipart/form-data" class="flex flex-col items-center justify-center h-48">
+      {% csrf_token %}
+      <input type="file" name="image" accept="image/*" class="my-12">
+
+      <input type="submit" value="送信" class="border w-48 h-12 border-orange-400 text-gray-700 rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:text-white hover:bg-orange-400 focus:outline-none focus:shadow-outline">
+    </form>
+
     <div class="ml-3">
       <a href="{% url 'sunabaco_book:list' %}">戻る</a>
     </div>

@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'sunabaco_book.apps.SunabacoBookConfig',
     'register.apps.RegisterConfig',
     #Library
+    'tailwind',
     'theme.apps.ThemeConfig',
     "crispy_forms",
     "crispy_tailwind",
@@ -27,8 +28,7 @@ INSTALLED_APPS = [
 TAILWIND_APP_NAME = 'theme'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
-NPM_LIB_PATH = "/usr/lib/node_modules/npm"
-
+NPM_BIN_PATH = '/usr/local/bin/npm'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

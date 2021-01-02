@@ -1,45 +1,47 @@
 from pyzbar import pyzbar
 import cv2
+import numpy as np
 
-def decode(image):
-    # decodes all barcodes from an image
-    decoded_objects = pyzbar.decode(image)
-    for obj in decoded_objects:
-        # draw the barcode
-        print("detected barcode:", obj)
-        image = draw_barcode(obj, image)
-        # print barcode type & data
-        print("Type:", obj.type)
-        print("Data:", obj.data)
-        print()
+camera_port = 0
+cap_cam = cv2.VideoCapture(camera_port,cv2.CAP_DSHOW)
+cv2.namedWindow('frame')
+# カメラが接続できない場合は、exit
+if not cap_cam.isOpened():
+    print("カメラを開けません")
+    exit()
 
-    return image
+while True:
+    # フレームごとにキャプチャ
+    ret, frame = cap_cam.read()
+    #フレームが正しく読み取られた場合、retはTrue
+    if not ret:
+        print("フレームは受信できません。終了しています...")
+        break
 
+    # グレースケール化してコントラストを調整する
+    gray_scale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    image = edit_contrast(gray_scale, 5)
 
+    # 結果のフレーム表示
+    cv2.imshow('frame',gray_scale)
+    if cv2.waitKey(0) & 0xFF == ord('q'):
+        break
 
-def draw_barcode(decoded, image):
-    # n_points = len(decoded.polygon)
-    # for i in range(n_points):
-    #     image = cv2.line(image, decoded.polygon[i], decoded.polygon[(i+1) % n_points], color=(0, 255, 0), thickness=5)
-    # uncomment above and comment below if you want to draw a polygon and not a rectangle
-    image = cv2.rectangle(image, (decoded.rect.left, decoded.rect.top), 
-                            (decoded.rect.left + decoded.rect.width, decoded.rect.top + decoded.rect.height),
-                            color=(0, 255, 0),
-                            thickness=5)
-    return image
+    # 加工した画像からフレームQRコードを取得してデコードする
+    codes = decode(image)
+    if len(codes) > 0:
+        output = codes[0][0].decode('utf-8', 'ignore')
+        print(output)
+        # CSVファイルに書き込み
+        # output_csv = output
+        with open('qr.csv', 'w') as csv_file:
+            writer = csv.writer(csv_file,
+                                lineterminator='\n')  # 改行コード（\n）を指定しておく
+            writer.writerow([output])
+        if 'output' != None:
+            cap_cam.read()
+            # cap_cam.release()
 
-
-if __name__ == "__main__":
-    from glob import glob
-
-    barcodes = glob("barcode*.png")
-    for barcode_file in barcodes:
-        # load the image to opencv
-        img = cv2.imread(barcode_file)
-        # decode detected barcodes & get the image
-        # that is drawn
-        img = decode(img)
-        # show the image
-        cv2.imshow("img", img)
-        cv2.waitKey(0)
-
+    # すべて完了したらキャプチャーを解放する
+    cap_cam.release()
+    cv2.destroyAllWindows()

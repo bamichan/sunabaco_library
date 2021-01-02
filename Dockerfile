@@ -10,9 +10,9 @@ COPY . /sunabaco_app
 COPY ./nginx/gunicorn /var/run/gunicorn
 COPY ./nginx /etc/nginx
 
+
 RUN apt-get update && apt-get install -y \
-    pkg-config \
-    libgtk2.0-dev \
+    x11-apps \
     libzbar0 \
     libopencv-dev \
     libv4l-dev \

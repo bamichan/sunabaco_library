@@ -15,9 +15,12 @@ services:
   web:
     build: .
     image: docker_sunabaco_web:latest
+    environment:
+      - DISPLAY=$DISPLAY_MAC
     volumes:
       - .:/sunabaco_app
-      - $HOME/.Xauthority:/root/.Xauthority
+      - ./eclipse-docker:/home/developer
+      - /tmp/.X11-unix:/tmp/.X11-unix 
       - ./nginx/gunicorn:/var/run/gunicorn
     command: python manage.py runsslserver 0.0.0.0:8000 --certificate foobar.crt --key foobar.key
     ports:

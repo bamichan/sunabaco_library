@@ -26,7 +26,6 @@ import cv2
 import numpy as np
 
 
-
 def index(request):
     return render(request, 'index.html')
 
@@ -182,7 +181,7 @@ class MypageListView(generic.ListView):
 
         # 結果のフレーム表示
         cv2.imshow('frame',gray_scale)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        if cv2.waitKey(0) & 0xFF == ord('q'):
             break
 
         # 加工した画像からフレームQRコードを取得してデコードする
@@ -197,13 +196,14 @@ class MypageListView(generic.ListView):
                                     lineterminator='\n')  # 改行コード（\n）を指定しておく
                 writer.writerow([output])
             if 'output' != None:
-                #cap_cam.read()
-                cap_cam.release()
+                cap_cam.read()
+                # cap_cam.release()
 
-    # すべて完了したらキャプチャーを解放する
-    #cap_cam.release()
-    cv2.destroyAllWindows()
-    
+        # すべて完了したらキャプチャーを解放する
+        cap_cam.release()
+        cv2.destroyAllWindows()
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['history_list'] = Reservation.objects.filter(lending_user_id=self.request.user.id).all()

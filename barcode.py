@@ -2,8 +2,7 @@ from pyzbar import pyzbar
 import cv2
 import numpy as np
 
-camera_port = 0
-cap_cam = cv2.VideoCapture(camera_port,cv2.CAP_DSHOW)
+cap_cam = cv2.VideoCapture(0)
 cv2.namedWindow('frame')
 # カメラが接続できない場合は、exit
 if not cap_cam.isOpened():

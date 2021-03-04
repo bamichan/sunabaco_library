@@ -12,6 +12,7 @@
         <div class="text-2xl font-bold text-orange-400 mb-4">{{ bookimage.title }}</div>
         <p class="text-gray-700 text-left mb-8">{{ bookimage.genre }}</p>
         <span class="text-sm">
+
           {% if bookimage.lending == 1 and bookimage.book_status == 0 %}
           <button class="w-64 mb-24 text-lg h-16 text-white font-extrabold bg-orange-400">
             <a class="text-white w-64" href="{% url 'sunabaco_book:reservation_book' bookimage.id %}">もらう</a>
@@ -23,7 +24,10 @@
           {% else %}
           <em class="text-red-600 text-xl font-bold">レンタル中です</em>
           {% endif %}
+
         </span>
+        {{ Review.point }}
+
       </div>
       <button>
         <a class="mb-24 text-white" href="{% url 'sunabaco_book:list' %}">戻る</a>

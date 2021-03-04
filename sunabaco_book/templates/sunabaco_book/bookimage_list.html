@@ -73,12 +73,12 @@
 
     <div class="card">
       {% for book in result %}
-      <div class=" md:flex-col md:items-center p-3">
+      <div class="justify-center md:flex-col md:items-center p-3">
         <div class="w-full h-64 flex justify-center">
-          <p class="w-5">{{ book.Item.author }}</p>
           <img src="{{book.Item.largeImageUrl}}" alt="book image">
         </div>
-        <h6 class="flex justify-center w-9/12 p-3 m-auto">{{ book.Item.title }}</h6>
+        <h6 class="w-9/12 p-3 text-center m-auto">{{ book.Item.title }}</h6>
+        <p class="text-center">{{ book.Item.author }}</p>
         <div class="w-10/12 p-3 m-auto">
           <p class="m-auto pb-3">{{ book.Item.itemCaption }}</p>
           <p class="m-auto">価格 {{ book.Item.itemPrice }}円（税込）</p>

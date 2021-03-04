@@ -10,8 +10,11 @@ COPY . /sunabaco_app
 COPY ./nginx/gunicorn /var/run/gunicorn
 COPY ./nginx /etc/nginx
 
+RUN apt-get update && \
+    apt-get install -y build-essential libzbar-dev
 RUN pip install --upgrade pip
 RUN pip install gunicorn
+RUN pip install pyzbar
 RUN pip install -r requirements.txt
 
 EXPOSE 8000

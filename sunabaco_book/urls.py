@@ -10,7 +10,6 @@ app_name = 'sunabaco_book'
 urlpatterns = [
     path('', views.book_list, name='list'),
     path('create/', views.book_create, name='create'),
-    path('accounts/profile/', views.index, name='index'),
     path('mypage/', views.mypage_list, name='mypage_list'),
     path('detail/<pk>/', views.book_detail, name='detail'),
     path('books/reservation_book/<pk>', views.reservation_book, name='reservation_book'),
